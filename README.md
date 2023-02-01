@@ -26,11 +26,11 @@ In ICLR 2023.<br>
 ```python
 # FFHQ-5k
 python train.py --outdir=./output/ffhq-5k --data=/path/dataset/ffhq256x256.zip --cfg=auto --batch=64 --gpus=8 \ 
-        --subset=5000 --kimg=25000 --aug=apa --with-dataaug=true --mirror=1 --metrics=fid50k_full --lamd=0.5 --pre_model=clip 
+--subset=5000 --kimg=25000 --aug=apa --with-dataaug=true --mirror=1 --metrics=fid50k_full --lamd=0.5 --pre_model=clip 
 
 #CIFAR-10
 python train.py --outdir=./output/cifar10 --data=/path/dataset/cifar10.zip --cfg=cifar --batch=64 --gpus=8 \
-         --kimg=100000 --aug=apa --with-dataaug=true --mirror=1 --metrics=fid50k_full --lamd=0.1 --pre_model=resnet18 
+--kimg=100000 --aug=apa --with-dataaug=true --mirror=1 --metrics=fid50k_full --lamd=0.1 --pre_model=resnet18 
 
 ```
 
