@@ -88,12 +88,12 @@ class CommaSeparatedList(click.ParamType):
 @click.pass_context
 @click.option('network_pkl', '--network', help='Network pickle filename or URL', metavar='PATH', required=True)
 @click.option('--metrics', help='Comma-separated list or "none"', type=CommaSeparatedList(), default='fid50k_full', show_default=True)
-@click.option('--metricdata', help='Dataset to evaluate metrics against (directory or zip) [default: same as training data]', metavar='PATH')
+@click.option('--data', help='Dataset to evaluate metrics against (directory or zip) [default: same as training data]', metavar='PATH')
 @click.option('--mirror', help='Whether the dataset was augmented with x-flips during training [default: look up]', type=bool, metavar='BOOL')
 @click.option('--gpus', help='Number of GPUs to use', type=int, default=1, metavar='INT', show_default=True)
 @click.option('--verbose', help='Print optional information', type=bool, default=True, metavar='BOOL', show_default=True)
 
-def calc_metrics(ctx, network_pkl, metrics, metricdata, mirror, gpus, verbose):
+def calc_metrics(ctx, network_pkl, metrics, data, mirror, gpus, verbose):
     """Calculate quality metrics for previous training run or pretrained network pickle.
 
     Examples:
@@ -105,13 +105,13 @@ def calc_metrics(ctx, network_pkl, metrics, metricdata, mirror, gpus, verbose):
 
     \b
     # Pre-trained network pickle: specify dataset explicitly, print result to stdout.
-    python calc_metrics.py --metrics=fid50k_full --metricdata=~/datasets/ffhq.zip --mirror=1 \\
+    python calc_metrics.py --metrics=fid50k_full --data=~/datasets/ffhq.zip --mirror=1 \\
         --network=https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl
 
     Available metrics:
 
     \b
-      ADA and APA papers:
+      ADA paper:
         fid50k_full  Frechet inception distance against the full dataset.
         kid50k_full  Kernel inception distance against the full dataset.
         pr50k3_full  Precision and recall againt the full dataset.
@@ -147,12 +147,12 @@ def calc_metrics(ctx, network_pkl, metrics, metricdata, mirror, gpus, verbose):
         args.G = network_dict['G_ema'] # subclass of torch.nn.Module
 
     # Initialize dataset options.
-    if metricdata is not None:
-        args.dataset_kwargs = dnnlib.EasyDict(class_name='training.dataset.ImageFolderDataset', path=metricdata)
+    if data is not None:
+        args.dataset_kwargs = dnnlib.EasyDict(class_name='training.dataset.ImageFolderDataset', path=data)
     elif network_dict['training_set_kwargs'] is not None:
         args.dataset_kwargs = dnnlib.EasyDict(network_dict['training_set_kwargs'])
     else:
-        ctx.fail('Could not look up dataset options; please specify --metricdata')
+        ctx.fail('Could not look up dataset options; please specify --data')
 
     # Finalize dataset options.
     args.dataset_kwargs.resolution = args.G.img_resolution
