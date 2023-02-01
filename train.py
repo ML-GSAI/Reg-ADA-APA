@@ -483,8 +483,8 @@ class CommaSeparatedList(click.ParamType):
 @click.option('--workers', help='Override number of DataLoader workers', type=int, metavar='INT')
 
 ### Pre-trained models.
-@click.option('--lamd', help='Set the hyperparameter of the loss function for pre-trained model [default: 0]', required=True, type=float, metavar='FLOAT')
-@click.option('--pre_model', help='The names of pre-trained model [default: None]', required=True, metavar='PKL')
+@click.option('--lamd', help='Set the hyperparameter of the loss function for pre-trained model [default: 1.0]', type=float, metavar='FLOAT')
+@click.option('--pre_model', help='The names of pre-trained model [default: resnet18]',  metavar='PKL')
 
 def main(ctx, outdir, dry_run, **config_kwargs):
     """Train a GAN using the techniques described in the paper
