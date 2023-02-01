@@ -25,10 +25,12 @@ In ICLR 2023.<br>
 
 ```python
 # FFHQ-5k
-python train.py --outdir=./output/ffhq-5k --data=/path/dataset/ffhq256x256.zip --cfg=auto --batch=64 --gpus=8 --subset=5000 --kimg=25000 --aug=apa --with-dataaug=true --mirror=1 --metrics=fid50k_full --lamd=0.5 --pre_model=clip 
+python train.py --outdir=./output/ffhq-5k --data=/path/dataset/ffhq256x256.zip --cfg=auto --batch=64 --gpus=8 \ 
+        --subset=5000 --kimg=25000 --aug=apa --with-dataaug=true --mirror=1 --metrics=fid50k_full --lamd=0.5 --pre_model=clip 
 
 #CIFAR-10
-python train.py --outdir=./output/cifar10 --data=/path/dataset/cifar10.zip --cfg=cifar --batch=64 --gpus=8  --kimg=100000 --aug=apa --with-dataaug=true --mirror=1 --metrics=fid50k_full --lamd=0.1 --pre_model=resnet18 
+python train.py --outdir=./output/cifar10 --data=/path/dataset/cifar10.zip --cfg=cifar --batch=64 --gpus=8 \
+         --kimg=100000 --aug=apa --with-dataaug=true --mirror=1 --metrics=fid50k_full --lamd=0.1 --pre_model=resnet18 
 
 ```
 
@@ -47,7 +49,8 @@ Please refer to [APA Training new networks](https://github.com/EndlessSora/Decei
 After the training, we can can compute metrics:
 
 ```python
-python calc_metrics.py --metrics=fid50k_full,kid50k_full --data=/path/dataset/dataset.zip --network=/path/checkpoint/network.pkl
+python calc_metrics.py --metrics=fid50k_full,kid50k_full --data=/path/dataset/dataset.zip \ 
+        --network=/path/checkpoint/network.pkl
 ```
 
 The command above calculates the FID and KID metrics between the corresponding original full dataset and 50,000 generated images for a specified checkpoint pickle file. Please refer to [stylegan2-ada-pytorch](https://github.com/NVlabs/stylegan2-ada-pytorch#quality-metrics) for more information.
@@ -59,7 +62,8 @@ We can randomly generate images without fixed seeds by a pre-trained generative 
 
 ```python
 # Generate images with the truncation of 0.7
-python random_generate.py --outdir=out --trunc=0.7 --network=/path/checkpoint/network.pkl --images=100
+python random_generate.py --outdir=out --trunc=0.7 \ 
+        --network=/path/checkpoint/network.pkl --images=100
 ```
 Hyperparameter 'images' controlls the the number of generative images.
 
